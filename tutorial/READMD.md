@@ -1,4 +1,5 @@
-# this project is following the official document of [Django REST Framework](http://www.django-rest-framework.org/tutorial/1-serialization/)
+## About
+This project is following the official document of [Django REST Framework](http://www.django-rest-framework.org/tutorial/1-serialization/)
 
 
 ## Requirement
