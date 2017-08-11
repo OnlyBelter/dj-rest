@@ -12,4 +12,4 @@ This project was created for learning [Django REST Framework](http://www.django-
 
 ## Content
 - Official Tutorial: [link](https://github.com/OnlyBelter/dj-rest/tree/master/tutorial) [README.md](https://github.com/OnlyBelter/dj-rest/blob/master/tutorial/README.md)
-- Image sharing system backend(iss):
+- Image sharing system backend(iss): [link](https://github.com/OnlyBelter/dj-rest/tree/master/issBackend) [README.md](https://github.com/OnlyBelter/dj-rest/blob/master/issBackend/README.md)
