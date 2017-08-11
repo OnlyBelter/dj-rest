@@ -20,9 +20,26 @@ def add_user():
 
 def get_all_method():
     # check all of the method supported by this endpoint(url)
-    verbs = requests.options('http://localhost:8024/users/')
+    verbs = requests.options('http://localhost:8024/snippets/')
     print(verbs.headers['allow'])
+
+
+def test_post_permission():
+    # add new user by 'post'
+    file = {'file': ('slogan-and-logo.png',
+                     open(r"E:\test\slogan-and-logo.png", 'rb'),
+                     'image/png', {'Expires': '0'})}
+    new_snippets = {'title': 'xiaoming',
+                    'code': 'print("Hurry up")',
+                    'language': 'python',
+                    'style': 'friendly'}
+    r = requests.post('http://localhost:8024/snippets/', auth=('belter', ''), data=new_snippets)
+    r2 = requests.post('http://localhost:8024/snippets/', auth=('belter', 'password123'), data=new_snippets)
+    print(r.status_code)
+    print(r.content)
+    print(r2.status_code)
+    print(r2.content)
 
 get_users_info()
 get_all_method()
-
+test_post_permission()

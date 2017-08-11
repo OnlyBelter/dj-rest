@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from rest_framework import routers
-from quickstart import views
+# from snippets import views
 # import snippets
 # from django.contrib import admin
 
@@ -31,8 +31,8 @@ Again, if we need more control over the API URLs we can simply drop down
 to using regular class-based views, and writing the URL conf explicitly.
 """
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+# router.register(r'users', views.UserList)
+# router.register(r'groups', views.GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
-
+from snippets.models import Snippet
+from django.contrib.auth.models import User
 
 """
 The first thing we need to get started on our Web API is to provide a way of 
@@ -50,7 +50,31 @@ they are simply a shortcut for creating serializer classes:
 """
 
 
-class SnippetSerializer(serializers.ModelSerializer):
+class SnippetSerializer(serializers.HyperlinkedModelSerializer):
+    # add a new field
+    owner = serializers.ReadOnlyField(source='owner.username')
+    # Because we've included format suffixed URLs such as '.json',
+    # we also need to indicate on the highlight field that any format suffixed hyperlinks
+    # it returns should use the '.html' suffix.
+    highlight = serializers.HyperlinkedIdentityField(view_name='snippet-highlight',
+                                                     format='html')
+
     class Meta:
         model = Snippet
-        fields = ('id', 'title', 'code', 'file', 'linenos', 'language', 'style')
+        fields = ('id', 'title', 'code', 'file', 'highlight',
+                  'linenos', 'language', 'style', 'owner')
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Because 'snippets' is a reverse relationship on the User model,
+    it will not be included by default when using the ModelSerializer class,
+    so we needed to add an explicit field for it.
+    """
+    snippets = serializers.HyperlinkedRelatedField(many=True,
+                                                   view_name='snippet-detail',
+                                                   read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('url', 'id', 'username', 'snippets')
