@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # --- REST Setting ---
     'iss.apps.IssConfig',
+    'corsheaders',  # <-- for CORS
 ]
 
 """  --- REST Setting ---
@@ -53,6 +54,8 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # <-- for CORS
+    'django.middleware.common.CommonMiddleware',  # <-- for CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
