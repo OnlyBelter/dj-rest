@@ -47,10 +47,15 @@ We'd like to turn on pagination,
 and we want our API to only be accessible to admin users.
 """
 REST_FRAMEWORK = {
+    # Authentication credentials were not provided
+    # https://stackoverflow.com/a/26907225/2803344
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 200
 }
 
 MIDDLEWARE = [
