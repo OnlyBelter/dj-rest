@@ -5,6 +5,7 @@ from django.contrib.auth.models import User  # for authentication and permission
 from rest_framework import permissions
 from iss.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
@@ -20,6 +21,8 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAdminUser, )
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    # filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('id', 'username')
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -33,6 +36,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     SnippetDetail and SnippetHighlight view classes with a single class.
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+    # permission_classes = (permissions.AllowAny, IsOwnerOrReadOnly)
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 

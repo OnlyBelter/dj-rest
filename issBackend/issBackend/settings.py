@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',  # --- REST Setting ---
     'iss.apps.IssConfig',
     'corsheaders',  # <-- for CORS
+    'django_filters',  # <-- for filter
 ]
 
 """  --- REST Setting ---
@@ -55,7 +56,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
-    'PAGE_SIZE': 200
+    'PAGE_SIZE': 200,
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+
 }
 
 MIDDLEWARE = [
