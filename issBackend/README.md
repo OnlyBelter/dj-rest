@@ -1,4 +1,4 @@
-## adout
+## About
 This is the backend of [Image sharing system](https://github.com/OnlyBelter/image-sharing-system)
 
 ## User
