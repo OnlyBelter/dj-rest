@@ -45,8 +45,8 @@ class ImageViewSet(viewsets.ModelViewSet):
         print(self.request.data)
         if 'formData' in self.request.data:
             _ = json.loads(self.request.data.get('formData', {}))
-            serializer.save(userId=_.get('userId'), fileUrl=_.get('fileUrl'),
-                            des=_.get('des'))
+            serializer.save(userId=_.get('userId', ''), fileUrl=_.get('fileUrl'),
+                            des=_.get('des', ''), owner_id=_.get('userId', ''))
         else:
             print('please check formData')
         serializer.save(owner=self.request.user)
