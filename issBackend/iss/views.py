@@ -5,6 +5,7 @@ from django.contrib.auth.models import User  # for authentication and permission
 from rest_framework import permissions
 from iss.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
+import json
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -43,7 +44,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         print(self.request.data)
         if 'formData' in self.request.data:
-            _ = self.request.data.get('formData', {})
+            _ = json.loads(self.request.data.get('formData', {}))
             serializer.save(userId=_.get('userId'), fileUrl=_.get('fileUrl'),
                             des=_.get('des'))
         else:
