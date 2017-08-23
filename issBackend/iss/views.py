@@ -41,5 +41,11 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
     def perform_create(self, serializer):
-        print(self.request.DATA)
+        print(self.request.data)
+        if 'formData' in self.request.data:
+            _ = self.request.data.get('formData', {})
+            serializer.save(userId=_.get('userId'), fileUrl=_.get('fileUrl'),
+                            des=_.get('des'))
+        else:
+            print('please check formData')
         serializer.save(owner=self.request.user)
