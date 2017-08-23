@@ -41,4 +41,5 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
     def perform_create(self, serializer):
+        print(self.request.DATA)
         serializer.save(owner=self.request.user)
