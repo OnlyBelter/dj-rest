@@ -47,6 +47,8 @@ class ImageViewSet(viewsets.ModelViewSet):
         print('here has a post')
         print(self.request.data)
         print(type(self.request.data))
+        my_dict = dict(self.request.data.iterlists())
+        print(my_dict)
         print(self.request.data.get('fileUrl'))
         if 'formData' in self.request.data:
             _ = json.loads(self.request.data.get('formData', {}))
