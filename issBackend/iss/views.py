@@ -41,8 +41,13 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
+    print('outside of post')
+
     def perform_create(self, serializer):
+        print('here has a post')
         print(self.request.data)
+        print(type(self.request.data))
+        print(self.request.data.get('fileUrl'))
         if 'formData' in self.request.data:
             _ = json.loads(self.request.data.get('formData', {}))
             serializer.save(userId=_.get('userId', ''), fileUrl=_.get('fileUrl'),
