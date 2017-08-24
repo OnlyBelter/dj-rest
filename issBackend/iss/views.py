@@ -53,7 +53,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         my_dict = dict(self.request.data.iterlists())
         print('my_dict')
         print(my_dict)
-        my_image = my_dict['localImage']
+        my_image = my_dict['localImage'][0]
         try:
             print(type(my_image))
         except:
