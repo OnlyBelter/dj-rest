@@ -45,9 +45,13 @@ class ImageViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         print('here has a post')
+        print(dir(self.request))
+        print(2)
         print(self.request.data)
+        print(3)
         print(type(self.request.data))
         my_dict = dict(self.request.data.iterlists())
+        print('my_dict')
         print(my_dict)
         my_image = my_dict['localImage']
         try:
@@ -55,11 +59,12 @@ class ImageViewSet(viewsets.ModelViewSet):
         except:
             pass
         try:
-            with open('../../images/abc.png', 'w') as f_handle:
-                f_handle.write(my_image)
+            with open('../../images/abc.png', 'wb+') as f_handle:
+                for chunk in my_image.chunks():
+                    f_handle.write(chunk)
                 print('======im f_handle====')
         except:
-            pass
+            print("out of f_handle")
         print(self.request.data.get('fileUrl'))
         if 'formData' in self.request.data:
             _ = json.loads(self.request.data.get('formData', {}))
