@@ -156,5 +156,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'issBackend', 'static', 'static_root')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'issBackend', 'static', 'static_dirs'),
     # https://docs.djangoproject.com/en/1.11/ref/settings/#staticfiles-dirs
-    ('images', '../images'),  # <-- you can change here to set a different dir to store result file
+    ('files', '../images'),  # <-- you can change here to set a different dir to store result file
 ]

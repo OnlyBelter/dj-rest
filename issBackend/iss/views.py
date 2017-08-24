@@ -49,6 +49,17 @@ class ImageViewSet(viewsets.ModelViewSet):
         print(type(self.request.data))
         my_dict = dict(self.request.data.iterlists())
         print(my_dict)
+        my_image = my_dict['localImage']
+        try:
+            print(my_image.name)
+        except:
+            pass
+        try:
+            with open('../../images/abc.png', 'w') as f_handle:
+                f_handle.write(my_image)
+                print('======im f_handle====')
+        except:
+            pass
         print(self.request.data.get('fileUrl'))
         if 'formData' in self.request.data:
             _ = json.loads(self.request.data.get('formData', {}))
