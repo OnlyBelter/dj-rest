@@ -47,7 +47,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         print('here has a post')
         print(dir(self.request))
         print(2)
-        print(self.request.data)
+        print(self.request.data, '==', self.request.POST, '==', self.request.FILES)
         print(3)
         print(type(self.request.data))
         my_dict = dict(self.request.data.iterlists())
