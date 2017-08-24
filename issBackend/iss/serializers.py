@@ -9,7 +9,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Image
         fields = ('id', 'created', 'url',
-                  'userId', 'des', 'fileUrl', 'owner')
+                  'userId', 'des', 'fileUrl', 'owner', 'localImage')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
