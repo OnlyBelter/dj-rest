@@ -55,11 +55,11 @@ class ImageViewSet(viewsets.ModelViewSet):
         print(my_dict)
         my_image = my_dict['localImage']
         try:
-            print(my_image.name)
+            print(type(my_image))
         except:
             pass
         try:
-            with open('../../images/abc.png', 'wb+') as f_handle:
+            with open('/home/xiongx/djcode/dj-rest/images/abc.png', 'wb+') as f_handle:
                 for chunk in my_image.chunks():
                     f_handle.write(chunk)
                 print('======im f_handle====')
