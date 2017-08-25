@@ -43,10 +43,8 @@ INSTALLED_APPS = [
     'iss.apps.IssConfig',
     'corsheaders',  # <-- for CORS
     'django_filters',  # <-- for filter
-    'django.contrib.sites',  # <-- for get domain
 ]
 
-SET_ID = 1
 
 """  --- REST Setting ---
 We'd like to turn on pagination, 

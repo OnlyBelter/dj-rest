@@ -6,7 +6,6 @@ from rest_framework import permissions
 from iss.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from django.core.files.storage import default_storage
-from django.contrib.sites.models import Site
 from django.conf import settings
 import json
 import os
@@ -60,7 +59,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         my_image = files_dic['localImage'][0]
         store_path = ''
-        current_site = Site.objects.get_current()
+        current_site = self.request.META['HTTP_HOST']
         print(current_site.domain)
         try:
             print(my_image.name)
