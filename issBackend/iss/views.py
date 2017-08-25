@@ -8,6 +8,7 @@ from rest_framework import viewsets
 from django.core.files.storage import default_storage
 from django.conf import settings
 import json
+import os
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -53,17 +54,24 @@ class ImageViewSet(viewsets.ModelViewSet):
         self.request.FILES contains all files, MultiValueDict
         """
         strings_dic = dict(self.request.POST.iterlists())
+        print(strings_dic)
         files_dic = dict(self.request.FILES)
 
         my_image = files_dic['localImage'][0]
+        store_path = ''
         try:
             print(my_image.name)
             print(settings.STATICFILES_DIRS)
+            store_dir = settings.STATICFILES_DIRS[1][1]
+            print(store_dir)
+            store_path = os.path.join(store_dir, my_image.name)
+            store_url = os.path.join(settings.STATIC_URL, settings.STATICFILES_DIRS[1][0], my_image.name)
+            print(store_url)
         except:
             pass
         try:
             # https://stackoverflow.com/a/30195605/2803344
-            with open('/home/xiongx/djcode/dj-rest/images/abc2.png', 'wb+') as f_handle:
+            with open(store_path, 'wb+') as f_handle:
                 for chunk in my_image.chunks():
                     f_handle.write(chunk)
                 print('======im f_handle====')
