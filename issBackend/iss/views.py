@@ -6,6 +6,7 @@ from rest_framework import permissions
 from iss.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from django.core.files.storage import default_storage
+from django.contrib.sites.models import Site
 from django.conf import settings
 import json
 import os
@@ -59,13 +60,15 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         my_image = files_dic['localImage'][0]
         store_path = ''
+        current_site = Site.objects.get_current()
+        print(current_site.domain)
         try:
             print(my_image.name)
-            print(settings.STATICFILES_DIRS)
+            # print(settings.STATICFILES_DIRS)
             store_dir = settings.STATICFILES_DIRS[1][1]
             print(store_dir)
             store_path = os.path.join(store_dir, my_image.name)
-            store_url = os.path.join(settings.STATIC_URL, settings.STATICFILES_DIRS[1][0], my_image.name)
+            store_url = os.path.join(current_site, settings.STATIC_URL, settings.STATICFILES_DIRS[1][0], my_image.name)
             print(store_url)
         except:
             pass
