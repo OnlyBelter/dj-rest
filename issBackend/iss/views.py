@@ -78,11 +78,15 @@ class ImageViewSet(viewsets.ModelViewSet):
         except:
             print("out of f_handle")
         print(self.request.data.get('fileUrl'))
-        # if strings_dic:
-        #     print(strings_dic)
-        #     _ = strings_dic
-        #     serializer.save(userId=_.get('userId', ''), fileUrl=_.get('fileUrl'),
-        #                     des=_.get('des', ''), owner_id=_.get('userId', ''))
-        # else:
-        #     print('please check formData')
-        serializer.save(owner=self.request.user)
+        if strings_dic:
+            print(strings_dic)
+            _ = strings_dic
+            if my_image:
+                serializer.save(userId=_.get('userId', '')[0], fileUrl=store_url,
+                            des=_.get('des', '')[0], owner_id=_.get('userId', '')[0])
+            else:
+                serializer.save(userId=_.get('userId', '')[0], fileUrl=_.get('fileUrl')[0],
+                            des=_.get('des', '')[0], owner_id=_.get('userId', '')[0])
+        else:
+            print('please check formData')
+            serializer.save(owner=self.request.user)
