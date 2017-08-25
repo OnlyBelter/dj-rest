@@ -45,29 +45,30 @@ class ImageViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         print('here has a post')
-        print(dir(self.request))
-        print(2)
-        print(self.request.data, '==', self.request.POST, '==', self.request.FILES)
-        print(3)
-        print(type(self.request.data))
-        my_dict = dict(self.request.data.iterlists())
-        print('my_dict')
-        print(my_dict)
-        my_image = my_dict['localImage'][0]
+        """
+        self.request.data contains all data (strings and files), QueryDict
+        self.request.POST contains all strings, QueryDict
+        self.request.FILES contains all files, MultiValueDict
+        """
+        strings_dic = dict(self.request.POST.iterlists())
+        files_dic = dict(self.request.FILES)
+
+        my_image = files_dic['localImage'][0]
         try:
-            print(type(my_image))
+            print(my_image.name)
         except:
             pass
         try:
-            with open('/home/xiongx/djcode/dj-rest/images/abc.png', 'wb+') as f_handle:
+            # https://stackoverflow.com/a/30195605/2803344
+            with open('../../images/abc2.png', 'wb+') as f_handle:
                 for chunk in my_image.chunks():
                     f_handle.write(chunk)
                 print('======im f_handle====')
         except:
             print("out of f_handle")
         print(self.request.data.get('fileUrl'))
-        if 'formData' in self.request.data:
-            _ = json.loads(self.request.data.get('formData', {}))
+        if strings_dic:
+            _ = strings_dic
             serializer.save(userId=_.get('userId', ''), fileUrl=_.get('fileUrl'),
                             des=_.get('des', ''), owner_id=_.get('userId', ''))
         else:

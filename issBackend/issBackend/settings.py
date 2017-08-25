@@ -77,10 +77,10 @@ MIDDLEWARE = [
 # <-- for CORS
 CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_HEADERS = default_headers + (
-    'encrypt',
-    'Accept',
-)
+# CORS_ALLOW_HEADERS = default_headers + (
+#     'encrypt',
+#     'Accept',
+# )
 # <-- for CORS
 
 ROOT_URLCONF = 'issBackend.urls'
