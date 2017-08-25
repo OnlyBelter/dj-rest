@@ -5,6 +5,8 @@ from django.contrib.auth.models import User  # for authentication and permission
 from rest_framework import permissions
 from iss.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
+from django.core.files.storage import default_storage
+from django.conf import settings
 import json
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -56,11 +58,12 @@ class ImageViewSet(viewsets.ModelViewSet):
         my_image = files_dic['localImage'][0]
         try:
             print(my_image.name)
+            print(settings.STATICFILES_DIRS)
         except:
             pass
         try:
             # https://stackoverflow.com/a/30195605/2803344
-            with open('../../images/abc2.png', 'wb+') as f_handle:
+            with open('/home/xiongx/djcode/dj-rest/images/abc2.png', 'wb+') as f_handle:
                 for chunk in my_image.chunks():
                     f_handle.write(chunk)
                 print('======im f_handle====')
