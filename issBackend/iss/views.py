@@ -60,14 +60,14 @@ class ImageViewSet(viewsets.ModelViewSet):
         my_image = files_dic['localImage'][0]
         store_path = ''
         current_site = self.request.META['HTTP_HOST']
-        print(current_site.domain)
+        print(current_site)
         try:
             print(my_image.name)
             # print(settings.STATICFILES_DIRS)
             store_dir = settings.STATICFILES_DIRS[1][1]
             print(store_dir)
             store_path = os.path.join(store_dir, my_image.name)
-            store_url = os.path.join(current_site, settings.STATIC_URL, settings.STATICFILES_DIRS[1][0], my_image.name)
+            store_url = os.path.join(current_site, 'static', settings.STATICFILES_DIRS[1][0], my_image.name)
             print(store_url)
         except:
             pass
