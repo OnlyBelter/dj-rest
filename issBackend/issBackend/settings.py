@@ -158,7 +158,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'issBackend', 'static', 'static_root')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'issBackend', 'static', 'static_dirs'),
     # https://docs.djangoproject.com/en/1.11/ref/settings/#staticfiles-dirs
-    # ('files', 'D:/github/py2/dj-rest/images'),  # <-- you can change here to set a different dir to store result file
+    ('files', 'D:/github/py2/dj-rest/images'),  # <-- you can change here to set a different dir to store result file
 ]
 
 MEDIA_URL = '/media/'
