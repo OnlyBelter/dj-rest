@@ -13,7 +13,7 @@ class Image(models.Model):
     userId = models.CharField(max_length=100, blank=False, default='')
     des = models.TextField(blank=True)
     fileUrl = models.CharField(max_length=300, blank=False, default='')
-    localImage = models.FileField(blank=True)
+    localImage = models.FileField(upload_to='%Y/%m%d', null=True, blank=True)
 
     class Meta:
         ordering = ('created',)
