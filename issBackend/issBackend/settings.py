@@ -48,19 +48,15 @@ INSTALLED_APPS = [
 ]
 
 
-"""  --- REST Setting ---
-We'd like to turn on pagination, 
-and we want our API to only be accessible to admin users.
-"""
 REST_FRAMEWORK = {
     # Authentication credentials were not provided
     # https://stackoverflow.com/a/26907225/2803344
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    #     'rest_framework.authentication.BasicAuthentication',
-    #     'rest_framework.authentication.SessionAuthentication',
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
@@ -68,6 +64,10 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 
 }
+"""  --- REST Setting ---
+We'd like to turn on pagination, 
+and we want our API to only be accessible to admin users.
+"""
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # <-- for CORS
