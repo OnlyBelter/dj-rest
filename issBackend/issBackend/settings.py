@@ -163,5 +163,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'issBackend', 'static', 'static_dirs'),
 ]
 
+# https://stackoverflow.com/a/34117821/2803344
+# uploaded file saved here
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/xiongx/djcode/dj-rest/images'
+MEDIA_ROOT = '/tmp/images'

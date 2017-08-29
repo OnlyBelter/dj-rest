@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.ReadOnlyField(source='owner.id')
     owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:

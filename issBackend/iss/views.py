@@ -56,39 +56,14 @@ class ImageViewSet(viewsets.ModelViewSet):
         strings_dic = dict(self.request.POST.iterlists())
         print(strings_dic)
         files_dic = dict(self.request.FILES)
-
         my_image = files_dic['localImage'][0]
-        store_path = ''
-        current_site = self.request.META['HTTP_HOST']
-        print(current_site)
-        try:
-            print(my_image.name)
-            # print(settings.STATICFILES_DIRS)
-            store_dir = settings.STATICFILES_DIRS[1][1]
-            print(store_dir)
-            store_path = os.path.join(store_dir, my_image.name)
-            store_url = os.path.join(current_site, 'static', settings.STATICFILES_DIRS[1][0], my_image.name)
-            print(store_url)
-        except:
-            pass
-        try:
-            # https://stackoverflow.com/a/30195605/2803344
-            with open(store_path, 'wb+') as f_handle:
-                for chunk in my_image.chunks():
-                    f_handle.write(chunk)
-                print('======im f_handle====')
-        except:
-            print("out of f_handle")
-        print(self.request.data.get('fileUrl'))
         if strings_dic:
-            print(strings_dic)
             _ = strings_dic
-            if my_image:
-                serializer.save(userId=_.get('userId', '')[0], fileUrl=store_url,
-                            des=_.get('des', '')[0], owner_id=_.get('userId', '')[0])
-            else:
-                serializer.save(userId=_.get('userId', '')[0], fileUrl=_.get('fileUrl')[0],
-                            des=_.get('des', '')[0], owner_id=_.get('userId', '')[0])
+            serializer.save(userId=_.get('userId', '')[0],
+                            fileUrl=_.get('fileUrl')[0],
+                            des=_.get('des', '')[0],
+                            owner_id=_.get('userId', '')[0],
+                            localImage=my_image)
         else:
             print('please check formData')
             serializer.save(owner=self.request.user)
