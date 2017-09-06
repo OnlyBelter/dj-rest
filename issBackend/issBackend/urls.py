@@ -26,7 +26,7 @@ from rest_framework_jwt.views import refresh_jwt_token
 
 router = DefaultRouter()
 router.register(r'images', ImageViewSet)
-router.register(r'users', UserViewSet)
+router.register(r'users', UserViewSet, base_name='user')
 
 # urlpatterns = [
 #     url(r'^admin/', admin.site.urls),

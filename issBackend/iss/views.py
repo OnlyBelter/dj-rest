@@ -22,9 +22,18 @@ class UserViewSet(viewsets.ModelViewSet):
     We're still setting the queryset and serializer_class attributes exactly as we did when we were using regular views,
     but we no longer need to provide the same information to two separate classes.
     """
-    permission_classes = (permissions.IsAdminUser, )
-    queryset = User.objects.all()
+
+    # permission_classes = (permissions.IsAdminUser, )
+    permission_classes = (permissions.AllowAny, )
+    # queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_queryset(self):
+        queryset = User.objects.filter(id=self.request.user.id)
+        if self.request.user.is_superuser:
+            queryset = User.objects.all()
+        return queryset
+    # get_queryset(queryset)
     # filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id', 'username')
 
