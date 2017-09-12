@@ -1,16 +1,11 @@
-from django.shortcuts import render
 from iss.models import Image
 from iss.serializers import ImageSerializer, UserSerializer
 from django.contrib.auth.models import User  # for authentication and permissions
 from rest_framework import permissions
 from iss.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
-from django.core.files.storage import default_storage
-from django.conf import settings
-import json
-import os
-from django_filters.rest_framework import DjangoFilterBackend
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -33,8 +28,6 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.request.user.is_superuser:
             queryset = User.objects.all()
         return queryset
-    # get_queryset(queryset)
-    # filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id', 'username')
 
 
@@ -48,10 +41,26 @@ class ImageViewSet(viewsets.ModelViewSet):
     We're going to replace the SnippetList,
     SnippetDetail and SnippetHighlight view classes with a single class.
     """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-    # permission_classes = (permissions.AllowAny, IsOwnerOrReadOnly)
-    queryset = Image.objects.all()
+
+    def get_current_user(self):
+        user = User(username='test', password='test',
+                    email='test@test.com')
+        try:
+            user = self.request.user
+        except ObjectDoesNotExist:
+            pass
+        return user
+
+    permission_classes = (permissions.AllowAny, IsOwnerOrReadOnly)
+    # queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+    def get_queryset(self):
+        # filter by username
+        queryset = Image.objects.filter(owner__username=self.request.user.username)
+        if self.request.user.is_superuser:
+            queryset = Image.objects.all()
+        return queryset
 
     print('outside of post')
 
@@ -62,6 +71,13 @@ class ImageViewSet(viewsets.ModelViewSet):
         self.request.POST contains all strings, QueryDict
         self.request.FILES contains all files, MultiValueDict
         """
+        owner = User(username='test', password='test',
+                     email='test@test.com')
+        try:
+            owner = self.request.user
+        except ObjectDoesNotExist:
+            pass
+
         strings_dic = dict(self.request.POST.iterlists())
         print(strings_dic)
         files_dic = dict(self.request.FILES)
@@ -71,8 +87,9 @@ class ImageViewSet(viewsets.ModelViewSet):
             serializer.save(userId=_.get('userId', '')[0],
                             fileUrl=_.get('fileUrl')[0],
                             des=_.get('des', '')[0],
-                            owner_id=_.get('userId', '')[0],
-                            localImage=my_image)
+                            localImage=my_image,
+                            owner=owner)
         else:
-            print('please check formData')
-            serializer.save(owner=self.request.user)
+            message = 'There is no value was submitted.'
+            return JsonResponse(status=404,
+                                data={'status': 'false', 'message': message})
