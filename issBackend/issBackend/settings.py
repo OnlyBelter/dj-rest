@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from corsheaders.defaults import default_headers
+import datetime
+# from corsheaders.defaults import default_headers
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -79,6 +80,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# https://getblimp.github.io/django-rest-framework-jwt/#additional-settings
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
+    # 'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=2),
+}
+
 
 # <-- for CORS
 CORS_ORIGIN_ALLOW_ALL = True

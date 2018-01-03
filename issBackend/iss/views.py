@@ -1,8 +1,8 @@
-from iss.models import Image
-from iss.serializers import ImageSerializer, UserSerializer
+from .models import Image
+from .serializers import ImageSerializer, UserSerializer
 from django.contrib.auth.models import User  # for authentication and permissions
 from rest_framework import permissions
-from iss.permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -56,10 +56,13 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
     def get_queryset(self):
-        # filter by username
-        queryset = Image.objects.filter(owner__username=self.request.user.username)
+        # get image by id without any authentication
+
+        image_id = self.kwargs.get('pk')
+        queryset = Image.objects.filter(id=image_id)
         if self.request.user.is_superuser:
             queryset = Image.objects.all()
+        # import pdb; pdb.set_trace()
         return queryset
 
     print('outside of post')
@@ -71,25 +74,26 @@ class ImageViewSet(viewsets.ModelViewSet):
         self.request.POST contains all strings, QueryDict
         self.request.FILES contains all files, MultiValueDict
         """
-        owner = User(username='test', password='test',
-                     email='test@test.com')
+        # owner = User(username='test', password='test',
+        #              email='test@test.com')
         try:
             owner = self.request.user
         except ObjectDoesNotExist:
             pass
-
-        strings_dic = dict(self.request.POST.iterlists())
-        print(strings_dic)
-        files_dic = dict(self.request.FILES)
-        my_image = files_dic['localImage'][0]
-        if strings_dic:
-            _ = strings_dic
-            serializer.save(userId=_.get('userId', '')[0],
-                            fileUrl=_.get('fileUrl')[0],
-                            des=_.get('des', '')[0],
-                            localImage=my_image,
-                            owner=owner)
-        else:
-            message = 'There is no value was submitted.'
-            return JsonResponse(status=404,
-                                data={'status': 'false', 'message': message})
+        if self.request.user.username:
+            # import pdb; pdb.set_trace()
+            strings_dic = dict(self.request.POST)
+            print(strings_dic)
+            files_dic = dict(self.request.FILES)
+            my_image = files_dic['localImage'][0]
+            if strings_dic:
+                _ = strings_dic
+                serializer.save(userId=_.get('userId', '')[0],
+                                fileUrl=_.get('fileUrl')[0],
+                                des=_.get('des', '')[0],
+                                localImage=my_image,
+                                owner=owner)
+            else:
+                message = 'There is no value was submitted.'
+                return JsonResponse(status=404,
+                                    data={'status': 'false', 'message': message})

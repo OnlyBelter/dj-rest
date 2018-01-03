@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from iss.models import Image
+from .models import Image
 from django.contrib.auth.models import User
 
 

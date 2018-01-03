@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import requests
+BASE_URL = 'http://localhost:8024/'
 
 
 def get_users_info():
     # use 'get' to get data from users endpoint
-    r = requests.get('http://192.168.201.211:8024/images/', auth=('belter', 'password123'))
+    r = requests.get(BASE_URL + 'images/', auth=('belter', 'password123'))
     print(r.status_code)
     print(r.content)
 
@@ -13,14 +14,14 @@ def get_users_info():
 def add_user():
     # add new user by 'post'
     new_user = {'username': 'xiaoming', 'email': 'xiaoming@126.com'}
-    r = requests.post('http://localhost:8024/users/', auth=('admin', 'password123'), data=new_user)
+    r = requests.post(BASE_URL + 'users/', auth=('admin', 'password123'), data=new_user)
     print(r.status_code)
     print(r.content)
 
 
 def get_all_method():
     # check all of the method supported by this endpoint(url)
-    verbs = requests.options('http://192.168.201.211:8024/images/')
+    verbs = requests.options(BASE_URL + 'images/')
     print(verbs.headers['allow'])
 
 
